@@ -102,7 +102,7 @@ impl From<ValidationErrors> for Error {
 				ValidationErrorsKind::Field(validation_errors) => {
 					for error in validation_errors {
 						let str_error = format!(
-							"the field '{}', has an invalid value {}, ",
+							"the field '{}', has an invalid value {}",
 							field_name,
 							error.params["value"]
 						);

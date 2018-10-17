@@ -24,7 +24,7 @@ extern crate keccak_hash;
 extern crate itertools;
 extern crate failure;
 extern crate linked_hash_set;
-extern crate lunarity;
+extern crate lunarity_lexer;
 extern crate toolshed;
 extern crate regex;
 extern crate validator;
@@ -42,7 +42,9 @@ mod eip712;
 mod error;
 mod parser;
 mod encode;
-/// the EIP-712
+/// the EIP-712 encoding function
 pub use encode::hash_structured_data;
+/// encoding Error types
 pub use error::{ErrorKind, Error};
+/// EIP712 struct
 pub use eip712::{EIP712};
