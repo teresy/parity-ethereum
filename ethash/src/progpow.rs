@@ -49,33 +49,50 @@ const KECCAKF_PILN: [usize; 24] = [
 fn keccak_f800_round(st: &mut [u32; 25], r: usize) {
 	// Theta
 	let mut bc = [0u32; 5];
-	for i in 0..bc.len() {
-		bc[i] = st[i] ^ st[i + 5] ^ st[i + 10] ^ st[i + 15] ^ st[i + 20];
+
+	debug_assert_eq!(bc.len(), 5);
+	unroll! {
+		for i in 0..5 {
+			bc[i] = st[i] ^ st[i + 5] ^ st[i + 10] ^ st[i + 15] ^ st[i + 20];
+		}
 	}
 
-	for i in 0..bc.len() {
-		let t = bc[(i + 4) % 5] ^ bc[(i + 1) % 5].rotate_left(1);
-		for j in (0..st.len()).step_by(5) {
-			st[j + i] ^= t;
+	unroll! {
+		for i in 0..5 {
+			let t = bc[(i + 4) % 5] ^ bc[(i + 1) % 5].rotate_left(1);
+			for j in (0..st.len()).step_by(5) {
+				st[j + i] ^= t;
+			}
 		}
 	}
 
 	// Rho Pi
 	let mut t = st[1];
-	for i in 0..KECCAKF_ROTC.len() {
-		let j = KECCAKF_PILN[i];
-		bc[0] = st[j];
-		st[j] = t.rotate_left(KECCAKF_ROTC[i]);
-		t = bc[0];
+
+	debug_assert_eq!(KECCAKF_ROTC.len(), 24);
+	unroll! {
+		for i in 0..24 {
+			let j = KECCAKF_PILN[i];
+			bc[0] = st[j];
+			st[j] = t.rotate_left(KECCAKF_ROTC[i]);
+			t = bc[0];
+		}
 	}
 
 	// Chi
-	for j in (0..st.len()).step_by(5) {
-		for i in 0..bc.len() {
-			bc[i] = st[j + i];
+	debug_assert_eq!(st.len(), 25);
+	debug_assert_eq!(bc.len(), 5);
+	for j in (0..25).step_by(5) {
+		unroll! {
+			for i in 0..5 {
+				bc[i] = st[j + i];
+			}
 		}
-		for i in 0..bc.len() {
-			st[j + i] ^= (!bc[(i + 1) % 5]) & bc[(i + 2) % 5];
+
+		unroll! {
+			for i in 0..5 {
+				st[j + i] ^= (!bc[(i + 1) % 5]) & bc[(i + 2) % 5];
+			}
 		}
 	}
 
