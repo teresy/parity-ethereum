@@ -75,7 +75,7 @@ fn blooms_filter_1_million_miss_and_ok(b: &mut Bencher) {
 	database.insert_blooms(800_000, iter::once(&bloom)).unwrap();
 
 	b.iter(|| {
-		let matches = database.filter(0, 999_999, &vec![bad_bloom, bloom]).unwrap();
+		let matches = database.filter(0, 999_999, &[bad_bloom, bloom]).unwrap();
 		assert_eq!(matches, vec![200_000, 400_000, 600_000, 800_000]);
 	});
 }

@@ -212,7 +212,7 @@ mod test {
 		};
 
 		// if no beneficiaries are given no rewards are attributed
-		assert!(block_reward_contract.reward(&vec![], &mut call).unwrap().is_empty());
+		assert!(block_reward_contract.reward(&[], &mut call).unwrap().is_empty());
 
 		// the contract rewards (1000 + kind) for each benefactor
 		let beneficiaries = vec![

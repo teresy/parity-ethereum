@@ -879,7 +879,7 @@ impl Configuration {
 			validator_accounts: to_addresses(&self.args.arg_private_validators)?,
 			signer_account: self.args.arg_private_signer.clone().and_then(|account| to_address(Some(account)).ok()),
 			passwords: match self.args.arg_private_passwords.clone() {
-				Some(file) => passwords_from_files(&vec![file].as_slice())?,
+				Some(file) => passwords_from_files(&[file].as_slice())?,
 				None => Vec::new(),
 			},
 		};
@@ -889,7 +889,7 @@ impl Configuration {
 			threshold: self.args.arg_private_sstore_threshold.unwrap_or(0),
 			key_server_account: self.args.arg_private_account.clone().and_then(|account| to_address(Some(account)).ok()),
 			passwords: match self.args.arg_private_passwords.clone() {
-				Some(file) => passwords_from_files(&vec![file].as_slice())?,
+				Some(file) => passwords_from_files(&[file].as_slice())?,
 				None => Vec::new(),
 			},
 		};

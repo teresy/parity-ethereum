@@ -1832,7 +1832,7 @@ mod tests {
 		if let Seal::Regular(seal) = engine.generate_seal(b2.block(), &genesis_header) {
 			engine.set_signer(tap.clone(), addr1, "1".into());
 			let empty_step2 = sealed_empty_step(engine, 2, &genesis_header.hash());
-			let empty_steps = ::rlp::encode_list(&vec![empty_step2]);
+			let empty_steps = ::rlp::encode_list(&[empty_step2]);
 
 			assert_eq!(seal[0], encode(&3usize));
 			assert_eq!(seal[2], empty_steps);
@@ -1886,7 +1886,7 @@ mod tests {
 			engine.set_signer(tap.clone(), addr2, "0".into());
 			let empty_step3 = sealed_empty_step(engine, 3, &genesis_header.hash());
 
-			let empty_steps = ::rlp::encode_list(&vec![empty_step2, empty_step3]);
+			let empty_steps = ::rlp::encode_list(&[empty_step2, empty_step3]);
 
 			assert_eq!(seal[0], encode(&4usize));
 			assert_eq!(seal[2], empty_steps);
@@ -2095,7 +2095,7 @@ mod tests {
 		header.set_seal(vec![
 			encode(&2usize),
 			encode(&H520::default()),
-			::rlp::encode_list(&vec![sealed_empty_step]),
+			::rlp::encode_list(&[sealed_empty_step]),
 		]);
 
 		let info = engine.extra_info(&header);

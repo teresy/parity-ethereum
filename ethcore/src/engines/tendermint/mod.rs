@@ -928,7 +928,7 @@ mod tests {
 		let signature1 = tap.sign(proposer, None, keccak(&vote_info)).unwrap();
 
 		seal[1] = ::rlp::NULL_RLP.to_vec();
-		seal[2] = ::rlp::encode_list(&vec![H520::from(signature1.clone())]);
+		seal[2] = ::rlp::encode_list(&[H520::from(signature1.clone())]);
 		header.set_seal(seal.clone());
 
 		// One good signature is not enough.
@@ -940,7 +940,7 @@ mod tests {
 		let voter = insert_and_unlock(&tap, "0");
 		let signature0 = tap.sign(voter, None, keccak(&vote_info)).unwrap();
 
-		seal[2] = ::rlp::encode_list(&vec![H520::from(signature1.clone()), H520::from(signature0.clone())]);
+		seal[2] = ::rlp::encode_list(&[H520::from(signature1.clone()), H520::from(signature0.clone())]);
 		header.set_seal(seal.clone());
 
 		assert!(engine.verify_block_external(&header).is_ok());
@@ -948,7 +948,7 @@ mod tests {
 		let bad_voter = insert_and_unlock(&tap, "101");
 		let bad_signature = tap.sign(bad_voter, None, keccak(vote_info)).unwrap();
 
-		seal[2] = ::rlp::encode_list(&vec![H520::from(signature1), H520::from(bad_signature)]);
+		seal[2] = ::rlp::encode_list(&[H520::from(signature1), H520::from(bad_signature)]);
 		header.set_seal(seal);
 
 		// One good and one bad signature.
@@ -1084,7 +1084,7 @@ mod tests {
 		let signature0 = tap.sign(voter, None, keccak(&vote_info)).unwrap();
 
 		seal[1] = ::rlp::NULL_RLP.to_vec();
-		seal[2] = ::rlp::encode_list(&vec![H520::from(signature1.clone())]);
+		seal[2] = ::rlp::encode_list(&[H520::from(signature1.clone())]);
 		header.set_seal(seal.clone());
 
 		let epoch_verifier = super::EpochVerifier {
@@ -1112,7 +1112,7 @@ mod tests {
 			_ => panic!(),
 		}
 
-		seal[2] = ::rlp::encode_list(&vec![H520::from(signature1.clone()), H520::from(signature0.clone())]);
+		seal[2] = ::rlp::encode_list(&[H520::from(signature1.clone()), H520::from(signature0.clone())]);
 		header.set_seal(seal.clone());
 
 		assert!(epoch_verifier.verify_light(&header).is_ok());
@@ -1120,7 +1120,7 @@ mod tests {
 		let bad_voter = insert_and_unlock(&tap, "101");
 		let bad_signature = tap.sign(bad_voter, None, keccak(&vote_info)).unwrap();
 
-		seal[2] = ::rlp::encode_list(&vec![H520::from(signature1), H520::from(bad_signature)]);
+		seal[2] = ::rlp::encode_list(&[H520::from(signature1), H520::from(bad_signature)]);
 		header.set_seal(seal);
 
 		// One good and one bad signature.
