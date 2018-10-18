@@ -225,7 +225,7 @@ mod tests {
 	fn journalling() {
 		let initial = vec![0u64; 8];
 		let mut bloom = Bloom::from_parts(&initial, 3);
-		bloom.set(&vec![5u8, 4]);
+		bloom.set(&[5u8, 4]);
 		let drain = bloom.drain_journal();
 
 		assert_eq!(2, drain.entries.len())
@@ -235,7 +235,7 @@ mod tests {
 	fn saturation() {
 		let initial = vec![0u64; 8];
 		let mut bloom = Bloom::from_parts(&initial, 3);
-		bloom.set(&vec![5u8, 4]);
+		bloom.set(&[5u8, 4]);
 
 		let full = bloom.saturation();
 		// 2/8/64 = 0.00390625

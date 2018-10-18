@@ -65,7 +65,7 @@ impl PodAccount {
 		stream.append(&self.nonce);
 		stream.append(&self.balance);
 		stream.append(&sec_trie_root(self.storage.iter().map(|(k, v)| (k, rlp::encode(&U256::from(&**v))))));
-		stream.append(&keccak(&self.code.as_ref().unwrap_or(&vec![])));
+		stream.append(&keccak(&self.code.as_ref().unwrap_or(&[])));
 		stream.out()
 	}
 

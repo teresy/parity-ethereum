@@ -564,7 +564,7 @@ mod tests {
 
 	#[test]
 	fn maintain_session_does_nothing_when_migration_required_on_slave_node_and_no_session() {
-		assert_eq!(maintain_session(&2.into(), &vec![2.into()].into_iter().collect(), &KeyServerSetSnapshot {
+		assert_eq!(maintain_session(&2.into(), &[2.into()].into_iter().collect(), &KeyServerSetSnapshot {
 			current_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
 			new_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap()),
 				(2.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
@@ -574,7 +574,7 @@ mod tests {
 
 	#[test]
 	fn maintain_session_does_nothing_when_migration_started_on_slave_node_and_no_session() {
-		assert_eq!(maintain_session(&2.into(), &vec![2.into()].into_iter().collect(), &KeyServerSetSnapshot {
+		assert_eq!(maintain_session(&2.into(), &[2.into()].into_iter().collect(), &KeyServerSetSnapshot {
 			current_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
 			new_set: Default::default(),
 			migration: Some(KeyServerSetMigration {
@@ -602,7 +602,7 @@ mod tests {
 
 	#[test]
 	fn maintain_session_starts_session_when_migration_started_on_master_node_and_no_session() {
-		assert_eq!(maintain_session(&1.into(), &vec![2.into()].into_iter().collect(), &KeyServerSetSnapshot {
+		assert_eq!(maintain_session(&1.into(), &[2.into()].into_iter().collect(), &KeyServerSetSnapshot {
 			current_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
 			new_set: Default::default(),
 			migration: Some(KeyServerSetMigration {
@@ -616,7 +616,7 @@ mod tests {
 
 	#[test]
 	fn maintain_session_does_nothing_when_both_migration_and_session_are_started() {
-		assert_eq!(maintain_session(&1.into(), &vec![2.into()].into_iter().collect(), &KeyServerSetSnapshot {
+		assert_eq!(maintain_session(&1.into(), &[2.into()].into_iter().collect(), &KeyServerSetSnapshot {
 			current_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
 			new_set: Default::default(),
 			migration: Some(KeyServerSetMigration {
@@ -630,7 +630,7 @@ mod tests {
 
 	#[test]
 	fn maintain_session_confirms_migration_when_active_and_session_has_finished_on_new_node() {
-		assert_eq!(maintain_session(&1.into(), &vec![2.into()].into_iter().collect(), &KeyServerSetSnapshot {
+		assert_eq!(maintain_session(&1.into(), &[2.into()].into_iter().collect(), &KeyServerSetSnapshot {
 			current_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
 			new_set: Default::default(),
 			migration: Some(KeyServerSetMigration {
@@ -644,7 +644,7 @@ mod tests {
 
 	#[test]
 	fn maintain_session_drops_session_when_active_and_session_has_finished_on_removed_node() {
-		assert_eq!(maintain_session(&1.into(), &vec![2.into()].into_iter().collect(), &KeyServerSetSnapshot {
+		assert_eq!(maintain_session(&1.into(), &[2.into()].into_iter().collect(), &KeyServerSetSnapshot {
 			current_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap()),
 				(2.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
 			new_set: Default::default(),
@@ -658,7 +658,7 @@ mod tests {
 
 	#[test]
 	fn maintain_session_drops_session_when_active_and_session_has_failed() {
-		assert_eq!(maintain_session(&1.into(), &vec![2.into()].into_iter().collect(), &KeyServerSetSnapshot {
+		assert_eq!(maintain_session(&1.into(), &[2.into()].into_iter().collect(), &KeyServerSetSnapshot {
 			current_set: vec![(1.into(), "127.0.0.1:8181".parse().unwrap())].into_iter().collect(),
 			new_set: Default::default(),
 			migration: Some(KeyServerSetMigration {

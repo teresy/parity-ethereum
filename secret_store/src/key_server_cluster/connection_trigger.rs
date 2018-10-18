@@ -227,8 +227,8 @@ mod tests {
 	fn do_not_disconnect_if_set_is_not_changed() {
 		let node_id = Random.generate().unwrap().public().clone();
 		assert_eq!(select_nodes_to_disconnect(
-			&vec![(node_id, "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
-			&vec![(node_id, "127.0.0.1:8081".parse().unwrap())].into_iter().collect()),
+			&[(node_id, "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
+			&[(node_id, "127.0.0.1:8081".parse().unwrap())].into_iter().collect()),
 			vec![]);
 	}
 
@@ -236,8 +236,8 @@ mod tests {
 	fn disconnect_if_address_has_changed() {
 		let node_id = Random.generate().unwrap().public().clone();
 		assert_eq!(select_nodes_to_disconnect(
-			&vec![(node_id.clone(), "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
-			&vec![(node_id.clone(), "127.0.0.1:8082".parse().unwrap())].into_iter().collect()),
+			&[(node_id.clone(), "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
+			&[(node_id.clone(), "127.0.0.1:8082".parse().unwrap())].into_iter().collect()),
 			vec![node_id.clone()]);
 	}
 
@@ -245,8 +245,8 @@ mod tests {
 	fn disconnect_if_node_has_removed() {
 		let node_id = Random.generate().unwrap().public().clone();
 		assert_eq!(select_nodes_to_disconnect(
-			&vec![(node_id.clone(), "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
-			&vec![].into_iter().collect()),
+			&[(node_id.clone(), "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
+			&[].into_iter().collect()),
 			vec![node_id.clone()]);
 	}
 
@@ -254,8 +254,8 @@ mod tests {
 	fn does_not_disconnect_if_node_has_added() {
 		let node_id = Random.generate().unwrap().public().clone();
 		assert_eq!(select_nodes_to_disconnect(
-			&vec![(node_id.clone(), "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
-			&vec![(node_id.clone(), "127.0.0.1:8081".parse().unwrap()),
+			&[(node_id.clone(), "127.0.0.1:8081".parse().unwrap())].into_iter().collect(),
+			&[(node_id.clone(), "127.0.0.1:8081".parse().unwrap()),
 				(Random.generate().unwrap().public().clone(), "127.0.0.1:8082".parse().unwrap())]
 				.into_iter().collect()),
 			vec![]);
